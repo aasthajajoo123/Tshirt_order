@@ -1,116 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customized T-Shirt Order Form</title>
-<script>
-function validateForm() {
-var tagline = document.getElementById("tagline").value;
-var color = document.getElementById("color").value;
-var size = document.getElementById("size").value;
-var quantity = document.getElementById("quantity").value;
-var deliveryDate = document.getElementById("delivery_date").value;
-var phoneNumber = document.getElementById("phone_number").value;
-var additionalDetails = document.getElementById("additional_details").value;
-if (tagline.length > 50) {
-alert("Tagline should be less than 50 characters.");
-return false;
-}
-if (quantity <= 0) {
-alert("Quantity must be a positive number.");
-return false;
-}
-var phoneRegex = /^[0-9]{10}$/;
-if (!phoneRegex.test(phoneNumber)) {
-alert("Invalid phone number. Please enter a 10-digit Indian phone number.");
-return false;
-}
-return true;
-}
-// Function to process the order and generate a receipt
-function processOrder() {
-if (validateForm()) {
-var tagline = document.getElementById("tagline").value;
-var color = document.getElementById("color").value;
-var size = document.getElementById("size").value;
-var quantity = document.getElementById("quantity").value;
-var deliveryDate = document.getElementById("delivery_date").value;
-var phoneNumber = document.getElementById("phone_number").value;
-var additionalDetails = document.getElementById("additional_details").value;
-// Create a Date object for the receipt
-var receiptDate = new Date();
-var receipt = `
-Order Receipt:
-Tagline: ${tagline}
-Color: ${color}
-Size: ${size}
-Quantity: ${quantity}
-Delivery Date: ${deliveryDate}
-Phone Number: ${phoneNumber}
-Additional Details: ${additionalDetails}
-Receipt Date: ${receiptDate}
-`;
-alert(receipt);
-}
-}
-</script>
+    <style>
+        body {
+            color: rgba(20, 1, 3, 0.776);
+        }
+    </style>
 </head>
-<body>
-<div align="center" style="background-color:#FAFAD2">
-<h1>Customized T-Shirt Order Form</h1>
-<form action="javascript:void(0);" onsubmit="processOrder();">
-<div>
-<label for="tagline">Tagline on the Shirt:</label>
-<input type="text" id="tagline" name="tagline" required placeholder="Enter your tagline
-here">
-</div>
-<br/>
-<div>
-<label for="color">Color:</label>
-<input type="text" id="color" name="color" required placeholder="Enter the color of the
-T-shirt">
-</div>
-<br/>
-<div>
-<label for="size">Size:</label>
-<select id="size" name="size" required>
-<option value="">Select Size</option>
-<option value="S">Small</option>
-<option value="M">Medium</option>
-<option value="L">Large</option>
-<option value="XL">Extra Large</option>
-</select>
-</div>
-<br/>
-<div>
-<label for="quantity">Quantity:</label>
-<input type="number" id="quantity" name="quantity" min="1" required
-placeholder="Enter the quantity">
-</div>
-<br/>
-<div>
-<label for="delivery_date">Date of Delivery:</label>
-<input type="date" id="delivery_date" name="delivery_date" required>
-</div>
-<br/>
-<div>
-<div>
-<label for="phone_number">Phone Number:</label>
-<input type="text" id="phone_number" name="phone_number" required
-placeholder="Enter your phone number">
-</div>
-<label for="additional_details">Additional Details:</label>
-<br/>
-<textarea id="additional_details" name="additional_details" rows="4" cols="40"
-placeholder="Enter any additional details"></textarea>
-</div>
-<br/>
-<div>
-<input type="submit" value="Place Order">
-</div>
-</form>
-</div>
+<body style="background-color: rgb(243, 237, 211);">
+
+    <h1>Customized T-shirt Order Form</h1>
+    <form action="/submit_order" method="post" onsubmit="return validateForm()">
+        <fieldset>
+            <h2>User Details</h2>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required></textarea>
+        </fieldset>
+
+        <fieldset>
+            <h2>T-shirt Order Details</h2>
+            <label for="tagline">Tagline on the Shirt:</label>
+            <input type="text" id="tagline" name="tagline" required>
+
+            <label for="color">Color:</label>
+            <select id="color" name="color" required>
+                <option value="Red">Red</option>
+                <option value="White">White</option>
+                <option value="Black">Black</option>
+                <option value="Green">Green</option>
+            </select>
+
+            <label for="size">Size:</label>
+            <select id="size" name="size" required>
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">Extra Large</option>
+            </select>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+
+            <label for="delivery_date">Date of Delivery:</label>
+            <input type="date" id="delivery_date" name="delivery_date" required>
+
+            <label for="other_details">Other Details of Delivery:</label>
+            <textarea id="other_details" name="other_details" rows="4"></textarea>
+
+            <input type="submit" value="Place Order">
+        </fieldset>
+    </form>
+
+    <script>
+        function validateForm() {
+            // Add your validation logic here
+            var phoneInput = document.getElementById("phone");
+            if (phoneInput.value.length !== 9) {
+                alert("Phone number must be 9 digits long.");
+                return false;
+            }
+            // Add more validation as needed
+
+            // Generate receipt
+            var receipt = "Order Receipt\n";
+            receipt += "Name: " + document.getElementById("name").value + "\n";
+            receipt += "Email: " + document.getElementById("email").value + "\n";
+            // Add more order details to the receipt
+
+            receipt += "Date of Generation: " + new Date().toLocaleDateString() + "\n";
+
+            alert(receipt);
+            return true;
+        }
+    </script>
 </body>
 </html>
-
